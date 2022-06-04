@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<link rel="stylesheet" href="../static/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 <head>
   <meta charset="UTF-8">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -28,21 +28,25 @@
     $.ajax({
       url: "/shorten-URL",
       data: JSON.stringify(data),
-      type:"POST",
+      type: "POST",
       contentType: 'application/json; charset=utf-8',
-      dataType: "text"
-    }).done(function(result) {
+      dataType: "text",
+      error: function (e) {
+        let message = JSON.parse(e.responseText).message;
+        let response = "<p>input error : " + message + "</p>";
+        $("#result").empty();
+        $("#result").append(response);
+      }
+    }).done(function (result) {
       let parse = JSON.parse(result);
-      let response = "<p>shorten url: <a href=" +$("#originUrl").val() +" target='_blank'>" + parse.shortenUrl +"</a></p>";
-      // todo : 현재까지 단축된 url들 표시하여 그 링크로는 get api를 통해 redirect를 할 수 있도록
+      let response =
+          "<p>shorten url: <a href=" + $("#originUrl").val() + " target='_blank'>"
+          + parse.shortenUrl + "</a></p><br>"
+          + "<p>" + parse.cnt + " people shortened this url.</p>";
+
       $("#result").empty();
       $("#result").append(response);
-    }).fail(function() {
-      let response = "<p>[변환 실패] URL 형식으로 입력해야합니다.</p>";
-      // todo : url validated 형식 알아보기, url validated connection 확인하는 로직 추가
-      $("#result").empty();
-      $("#result").append(response);
-    })
+    });
   }
 </script>
 </html>
