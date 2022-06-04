@@ -25,6 +25,8 @@ public class Url {
 	private String originUrl;
 	@Column(name = "shorten")
 	private String shortenUrl;
+	@Column(name = "cnt", columnDefinition = "integer default 1")
+	private int cnt;
 
 	public Url(String originUrl) {
 		this.originUrl = originUrl;
@@ -32,5 +34,9 @@ public class Url {
 
 	public void setShortenUrl(String shortenUrl) {
 		this.shortenUrl = shortenUrl;
+	}
+
+	public void increaseCnt() {
+		this.cnt++;
 	}
 }
