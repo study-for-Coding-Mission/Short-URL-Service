@@ -6,10 +6,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class BASE62Utils {
 
+	public static String HEAD;
+	public static String BASE62;
+
 	@Value("${shorten-url-suffix}")
-	private static String HEAD;
+	public void setHEAD(String head) {
+		HEAD = head;
+	}
 	@Value("${shorten-algorithm-BASE62}")
-	private static String BASE62;
+	public void setBASE62(String base62) {
+		BASE62 = base62;
+	}
 
 	public static String encode(String value) {
 		StringBuilder sb = new StringBuilder(HEAD);
