@@ -1,12 +1,10 @@
 package com.mission.ShortURLService.entity;
 
-import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,14 +16,13 @@ import lombok.NoArgsConstructor;
 public class Url {
 
 	@Id
-	@SequenceGenerator(name="seq_generator", sequenceName = "url_seq", initialValue = 100000)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generator")
-	private BigInteger id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	@Column(name = "origin")
 	private String originUrl;
 	@Column(name = "shorten")
 	private String shortenUrl;
-	@Column(name = "cnt", columnDefinition = "integer default 1")
+	@Column(name = "cnt", columnDefinition = "integer default 0")
 	private int cnt;
 
 	public Url(String originUrl) {

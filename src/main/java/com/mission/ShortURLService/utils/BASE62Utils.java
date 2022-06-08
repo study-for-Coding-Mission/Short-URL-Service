@@ -1,11 +1,11 @@
 package com.mission.ShortURLService.utils;
 
+import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BASE62Utils {
-
+public final class BASE62Utils {
 	public static String HEAD;
 	public static String BASE62;
 
@@ -18,16 +18,21 @@ public class BASE62Utils {
 		BASE62 = base62;
 	}
 
-	public static String encode(String value) {
+	public static String encode(Integer value) {
+
 		StringBuilder sb = new StringBuilder(HEAD);
-		Integer intVal = Integer.valueOf(value);
+		BigInteger val = new BigInteger("62");
+		BigInteger zero = new BigInteger("0");
+		BigInteger intVal = new BigInteger("100000000");
+		intVal = intVal.add(new BigInteger(value.toString()));
 		do {
-			Integer i = intVal % 62;
+			int i = intVal.mod(val).intValue();
 			sb.append(BASE62.charAt(i));
-			intVal /= 62;
-		} while (intVal > 0);
+			intVal = intVal.divide(val);
+		} while (intVal.compareTo(zero) == 1);
 		return sb.toString();
 	}
+
 	public static Integer decode(String value) {
 		Integer result = 0;
 		Integer power = 1;

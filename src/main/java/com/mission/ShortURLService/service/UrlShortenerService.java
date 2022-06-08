@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UrlShortenerService {
 
-	private final BASE62Utils base62Utils;
 	private final UrlShortenerRepository urlShortenerRepository;
 
 	@Transactional
@@ -40,7 +39,7 @@ public class UrlShortenerService {
 
 	public Url createNewUrl(UrlShortenerRequest request) {
 		Url url = urlShortenerRepository.save(new Url(request.getOriginUrl()));
-		url.setShortenUrl(base62Utils.encode(url.getId().toString()));
+		url.setShortenUrl(BASE62Utils.encode(url.getId()));
 		return url;
 	}
 }
