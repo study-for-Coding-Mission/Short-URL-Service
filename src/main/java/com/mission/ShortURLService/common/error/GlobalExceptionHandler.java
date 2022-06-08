@@ -16,9 +16,22 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorResponse> ExceptionHandler(Exception e) {
+		ErrorCode errorCode = INTERNAL_SERVER_ERROR;
+		log.warn("Exception: {}", e.getMessage());
+		return ResponseEntity
+			.internalServerError()
+			.body(new ErrorResponse(
+				HttpStatus.INTERNAL_SERVER_ERROR.value(),
+				errorCode.getCode(),
+				errorCode.getMessage()
+			));
+	}
+
 	@ExceptionHandler(NotFoundResourceException.class)
 	public ResponseEntity<ErrorResponse> NotFoundResourceExceptionHandler(NotFoundResourceException e) {
-		log.error("Exception: {}", e.getMessage());
+		log.warn("Exception: {}", e.getMessage());
 		return ResponseEntity
 			.status(e.getHttpStatus())
 			.body(ErrorResponse.of(e));
@@ -26,7 +39,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ErrorResponse> InvalidArgumentExceptionHandler(MethodArgumentNotValidException e) {
-		log.error("Exception: {}", e.getMessage());
+		log.warn("Exception: {}", e.getMessage());
 		return ResponseEntity
 			.status(HttpStatus.BAD_REQUEST)
 			.body(ErrorResponse.of(
