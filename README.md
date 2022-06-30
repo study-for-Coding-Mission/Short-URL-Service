@@ -5,3 +5,5 @@
 프로젝트 전체 과정에 대한 기록 : https://sunh0-history.tistory.com/2
 
 **프로젝트 설계, 개발, 리펙토링** 총 세개의 포스팅으로 작성하였습니다.
+
+![연동 결과](https://user-images.githubusercontent.com/88185732/176746639-1187d225-a163-484f-a478-b953a1b8834d.png)
